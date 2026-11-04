@@ -1,0 +1,271 @@
+@font-face {
+    font-family: 'rub';
+    src: url(/fonts/RUBLEV.otf);
+}
+
+@font-face {
+    font-family: 'bim';
+    src: url(/fonts/BIM.otf);
+}
+
+.modal_auth {
+    width: 783px;
+    height: 500px;
+    background-color: #100B07;
+    border: 1px solid #F57E02;
+}
+
+.modal_reg {
+    width: 783px;
+    height: 560px;
+    background-color: #100B07;
+    border: 1px solid #F57E02;
+}
+
+.macontent {
+    max-width: 560px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.macontent1 {
+    max-width: 586px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.headerA {
+    font-family: 'rub';
+    font-size: 36px;
+    color: #E8CF2B;
+    filter: drop-shadow(0 0 10px rgba(209, 120, 19, 1));
+    text-align: center;
+}
+
+.headerB {
+    font-family: 'rub';
+    font-size: 32px;
+    color: #E8CF2B;
+    filter: drop-shadow(0 0 10px rgba(209, 120, 19, 1));
+    text-align: center;
+}
+
+.fields {
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+}
+
+.nameField {
+    display: flex;
+    flex-direction: row;
+    gap: 28px;
+}
+
+.fieldText {
+    margin-top: 13px;
+    font-family: 'bim';
+    font-size: 29px;
+    color: #E8CF2B;
+}
+
+.fieldText1 {
+    margin-right: -9px;
+    margin-top: 13px;
+    font-family: 'bim';
+    font-size: 29px;
+    color: #E8CF2B;
+}
+
+.fieldText2 {
+    margin-right: 9px;
+    margin-top: 13px;
+    font-family: 'bim';
+    font-size: 29px;
+    color: #E8CF2B;
+}
+
+.fieldCon {
+    width: 432px;
+    height: 42px;
+    background-color: transparent;
+    border: 0.5px solid #F57E02;
+    font-family: 'bim';
+    font-size: 20px;
+    color: #ffffff;
+    padding-top: 14px;
+    padding-left: 15px;
+}
+
+.buttonMot {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.signin {
+    margin: 0 auto;
+    width: 266px;
+    height: 61px;
+    border: none;
+    background-color: #F57E02;
+    font-family: 'bim';
+    font-size: 24px;
+    color: #100B07;
+    transition: transform 0.5s ease;
+}
+
+.signin:hover {
+    transform: scale(1.04);
+    filter: drop-shadow(0 0 20px rgba(209, 120, 19, 1));
+}
+
+.signup {
+    margin: 0 auto;
+    width: 338px;
+    height: 61px;
+    border: none;
+    background-color: #F57E02;
+    font-family: 'bim';
+    font-size: 24px;
+    color: #100B07;
+    transition: transform 0.5s ease;
+}
+
+.signup:hover {
+    transform: scale(1.04);
+    filter: drop-shadow(0 0 20px rgba(209, 120, 19, 1));
+}
+
+.motiv {
+    text-align: center;
+    font-family: 'bim';
+    font-size: 16px;
+    color: #ffffff;
+}
+
+.other {
+    color: #E8CF2B;
+    font-size: 20px;
+}
+
+a {
+    text-decoration: none;
+}
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .75);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .3s, visibility .3s;
+    z-index: 999;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal_auth,
+.modal_reg {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(.96);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .3s, transform .3s, visibility .3s;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 40px 0;
+}
+
+.modal_auth.active,
+.modal_reg.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.modal-close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    width: 36px;
+    height: 36px;
+    background: transparent;
+    border: 1px solid #F57E02;
+    color: #E8CF2B;
+    font-size: 22px;
+    cursor: pointer;
+    transition: transform .3s, background .3s;
+}
+
+.modal-close:hover {
+    transform: scale(1.1);
+    background: #F57E02;
+    color: #100B07;
+}
+
+.fieldWrap {
+    position: relative;
+    width: 432px;
+}
+
+.fieldWrap .fieldCon {
+    width: 100%;
+}
+
+.pass-toggle {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: #E8CF2B;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+input.fieldCon {
+    padding-top: 0;
+    padding-bottom: 0;
+    line-height: 42px;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color .3s, box-shadow .3s;
+}
+
+input.fieldCon:focus {
+    border-color: #E8CF2B;
+    box-shadow: 0 0 12px rgba(232, 207, 43, .35);
+}
+
+input.fieldCon::placeholder {
+    color: #7a5a2e;
+}
+
+.fields {
+    gap: 22px;
+}
+
+.form-error {
+    display: none;
+    font-family: 'bim';
+    font-size: 16px;
+    color: #eb3939;
+    text-align: center;
+}
+
+.form-error:not(:empty) {
+    display: block;
+}
