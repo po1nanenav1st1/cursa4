@@ -1,0 +1,196 @@
+.admin-container {
+    max-width: 1230px;
+    margin: 50px auto;
+    font-family: 'bim', sans-serif;
+}
+
+.admin-title {
+    font-family: 'rub', sans-serif;
+    font-size: 48px;
+    color: #E8CF2B;
+    margin-bottom: 30px;
+    filter: drop-shadow(0 0 10px rgba(209, 120, 19, 1));
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #fff;
+    background: #100B07;
+    border: 1px solid #F57E02;
+}
+
+.admin-table th, 
+.admin-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #333;
+    font-size: 18px;
+}
+
+.admin-table th {
+    color: #E8CF2B;
+    font-weight: normal;
+    border-bottom: 2px solid #F57E02;
+}
+
+.status-btn {
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+    font-family: 'bim', sans-serif;
+    font-size: 16px;
+    transition: 0.3s;
+    color: #fff;
+    margin-right: 5px;
+}
+
+.btn-success { 
+    background: #28a745; 
+}
+.btn-success:hover { 
+    background: #218838; 
+}
+
+.btn-cancel { 
+    background: #dc3545; 
+}
+.btn-cancel:hover { 
+    background: #c82333; 
+}
+
+.status-text { 
+    font-weight: bold; 
+}
+.status-Успешно { 
+    color: #E8CF2B; 
+}
+.status-Отменено { 
+    color: #C63333; 
+}
+.status-Вобработке { 
+    color: #E39443; 
+}
+.admin-tabs {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.tab-btn {
+    padding: 10px 20px;
+    background: transparent;
+    border: 1px solid #F57E02;
+    color: #fff;
+    font-family: 'bim', sans-serif;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.tab-btn:hover {
+    background: rgba(245, 126, 2, 0.2);
+}
+
+.tab-btn.active {
+    background: #F57E02;
+    color: #100B07;
+}
+.admin-add-btn {
+    margin-bottom: 20px;
+    padding: 10px 20px;
+}
+
+.admin-hr {
+    margin-top: 50px;
+}
+
+.modal-add-menu {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-add-content {
+    background: #100B07;
+    border: 1px solid #F57E02;
+    padding: 30px;
+    width: 500px;
+    font-family: 'bim', sans-serif;
+    color: #fff;
+}
+
+.modal-add-title {
+    color: #E8CF2B;
+    font-family: 'rub', sans-serif;
+    font-size: 32px;
+    margin-bottom: 20px;
+    text-align: center;
+    filter: drop-shadow(0 0 10px rgba(209, 120, 19, 1));
+}
+
+.modal-add-label {
+    display: block;
+    margin-bottom: 15px;
+    font-family: 'bim', sans-serif;
+    font-size: 18px;
+    color: #E8CF2B;
+}
+
+.modal-add-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.modal-add-row label {
+    flex: 1;
+    font-family: 'bim', sans-serif;
+    font-size: 18px;
+    color: #E8CF2B;
+}
+
+.modal-add-input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    background: transparent;
+    border: 1px solid #F57E02;
+    color: #fff;
+    font-family: 'bim', sans-serif;
+    font-size: 16px;
+    outline: none;
+}
+
+.modal-add-input:focus {
+    border-color: #E8CF2B;
+    box-shadow: 0 0 10px rgba(232, 207, 43, 0.3);
+}
+
+.modal-add-select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    background: #100B07;
+    border: 1px solid #F57E02;
+    color: #fff;
+    font-family: 'bim', sans-serif;
+    font-size: 16px;
+    outline: none;
+}
+
+.modal-add-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.modal-add-btn {
+    flex: 1;
+    padding: 12px;
+    font-family: 'bim', sans-serif;
+    font-size: 16px;
+}
