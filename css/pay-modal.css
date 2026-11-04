@@ -1,0 +1,164 @@
+@font-face {
+    font-family: 'rub';
+    src: url(/fonts/RUBLEV.otf);
+}
+
+@font-face {
+    font-family: 'bim';
+    src: url(/fonts/BIM.otf);
+}
+
+.pay-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .75);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .3s, visibility .3s;
+    z-index: 999;
+}
+
+.pay-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal_pay {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(.96);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .3s, transform .3s, visibility .3s;
+    z-index: 1000;
+    width: 783px;
+    height: 560px;
+    background-color: #100B07;
+    border: 1px solid #F57E02;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 40px 0;
+}
+
+.modal_pay.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.pay-content {
+    max-width: 586px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.pay-header {
+    font-family: 'rub';
+    font-size: 32px;
+    color: #E8CF2B;
+    filter: drop-shadow(0 0 10px rgba(209, 120, 19, 1));
+    text-align: center;
+}
+
+.pay-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.pay-field-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.pay-label {
+    font-family: 'bim';
+    font-size: 29px;
+    color: #E8CF2B;
+    width: 120px;
+    flex-shrink: 0;
+}
+
+.pay-input {
+    flex-grow: 1;
+    height: 42px;
+    background-color: transparent;
+    border: 0.5px solid #F57E02;
+    font-family: 'bim';
+    font-size: 20px;
+    color: #ffffff;
+    padding-left: 15px;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color .3s, box-shadow .3s;
+}
+
+.pay-input:focus {
+    border-color: #E8CF2B;
+    box-shadow: 0 0 12px rgba(232, 207, 43, .35);
+}
+
+.pay-input::placeholder {
+    color: #7a5a2e;
+}
+
+.pay-error {
+    display: none;
+    font-family: 'bim';
+    font-size: 16px;
+    color: #eb3939;
+    text-align: center;
+    margin-top: -10px;
+}
+
+.pay-error:not(:empty) {
+    display: block;
+}
+
+.pay-btn-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.pay-submit {
+    width: 266px;
+    height: 61px;
+    border: none;
+    background-color: #F57E02;
+    font-family: 'bim';
+    font-size: 24px;
+    color: #100B07;
+    cursor: pointer;
+    transition: transform 0.5s ease, filter 0.5s ease;
+}
+
+.pay-submit:hover {
+    transform: scale(1.04);
+    filter: drop-shadow(0 0 20px rgba(209, 120, 19, 1));
+}
+
+.pay-close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    width: 36px;
+    height: 36px;
+    background: transparent;
+    border: 1px solid #F57E02;
+    color: #E8CF2B;
+    font-size: 22px;
+    cursor: pointer;
+    transition: transform .3s, background .3s;
+}
+
+.pay-close:hover {
+    transform: scale(1.1);
+    background: #F57E02;
+    color: #100B07;
+}

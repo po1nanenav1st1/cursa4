@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профиль</title>
+    <link rel="stylesheet" href="/css/profile.css">
+    <script src="/js/auth.js" defer></script>
+</head>
+<body>
+    <header>
+        <div class="logoNavButton">
+            <img src="/images/Ramen no Jutsu.svg" width="180px" height="34px" alt="лого">
+            <div class="nav">
+                <a href="index.html"><p class="navtext">Главная</p></a>
+                <a href="index.html#menu"><p class="navtext">Меню</p></a>
+                <a href="index.html#reviews"><p class="navtext">Отзывы</p></a>
+                <div class="boking">
+                    <button class="bookingText" onclick="document.location='booking.html'">Забронировать</button>
+                </div>
+            </div>
+            <a href="profile.html">
+                <img src="/images/Group.png" width="32px" id="prof">
+            </a>
+        </div>
+        <hr>
+    </header>
+
+    <div class="profileBlock">
+        <div class="content">
+            <p class="profiletext">профиль</p>
+            <div class="infoblock">
+                <div class="information">
+                    <img src="/images/profle.svg" width="249px" id="proficon">
+                    <div class="infotext">
+                        <p class="login" id="profile-login">Логин</p>
+                        <p class="number" id="profile-phone">+7 912 345 67 89</p>
+                    </div>
+                </div>
+                
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+                    <button class="logout" id="admin-btn" style="display: none; background-color: #E8CF2B; color: #100B07;" onclick="document.location='admin.html'">Админ-панель</button>
+                    <button class="logout" id="logout-btn">Выйти</button>
+                </div>
+            </div>
+
+            <div class="blockbooking">
+                <div class="bookinginfo">
+                    <p class="textbook">Ваши бронирования</p>
+                    <div class="listbooking" id="bookings-list">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <footer>
+        <img src="/images/Ramen no Jutsu.svg" alt="лого" width="270px">
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const user = getCurrentUser();
+            if (!user) {
+                document.location = 'index.html';
+                return;
+            }
+            
+            document.getElementById('profile-login').textContent = user.login;
+            document.getElementById('profile-phone').textContent = user.phone;
+
+            if (user.role === 'admin') {
+                document.getElementById('admin-btn').style.display = 'block';
+            }
+
+            document.getElementById('logout-btn').addEventListener('click', () => {
+                logoutUser();
+                document.location = 'index.html';
+            });
+
+            const list = document.getElementById('bookings-list');
+            list.innerHTML = '<p style="color: white; font-family: \'bim\';">Загрузка...</p>';
+
+            try {
+                const res = await fetch('/api/bookings/' + user.id);
+                const myBookings = await res.json();
+
+                list.innerHTML = '';
+
+                if (myBookings.length === 0) {
+                    list.innerHTML = `<p style="font-family: 'bim'; color: #C5944E; font-size: 20px;">У вас пока нет бронирований.</p>`;
+                    return;
+                }
+
+                myBookings.forEach(b => {
+                    const cleanDate = b.date.substring(0, 10);
+                    const dateParts = cleanDate.split('-');
+                    const formattedDate = `${dateParts[2]}.${dateParts[1]}.${dateParts[0]}`;
+                    const isSuccess = b.status !== 'Отменено';
+                    const statusId = isSuccess ? 'status_order_success' : 'status_order_fail';
+                    const displayTime = b.time.substring(0, 5);
+
+                    const div = document.createElement('div');
+                    div.className = 'onebook';
+                    div.innerHTML = `
+                        <div class="onebookcont">
+                            <img src="/images/table.svg" width="69px">
+                            <div class="onebtext">
+                                <p class="textsob">№${b.orderNumber}</p>
+                                <p class="textsob">${formattedDate}</p>
+                                <p class="textsob">${displayTime}</p>
+                                <p id="${statusId}">${b.status}</p>
+                            </div>
+                        </div>
+                    `;
+                    list.appendChild(div);
+                });
+            } catch (err) {
+                list.innerHTML = `<p style="color: red; font-family: 'bim';">Ошибка загрузки данных с сервера.</p>`;
+            }
+        });
+    </script>
+</body>
+</html>

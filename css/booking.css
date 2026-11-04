@@ -1,0 +1,357 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #060803;
+}
+
+@font-face {
+    font-family: 'rub';
+    src: url(/fonts/RUBLEV.otf);
+}
+
+@font-face {
+    font-family: 'bim';
+    src: url(/fonts/BIM.otf);
+}
+
+a {
+    text-decoration: none;
+}
+
+header {
+    max-width: 1230px;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+.logoNavButton {
+    margin-bottom: 11px;
+    display: flex;
+    flex-direction: row;
+    gap: 248px;
+}
+
+.nav {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+}
+
+.navtext:hover {
+    transform: scale(1.05);
+    color: #ED902F;
+    filter: drop-shadow(0 0 10px rgba(209, 120, 19, 1));
+}
+
+.navtext {
+    font-family: 'bim';
+    font-size: 20px;
+    color: #a9a9a9;
+    transition: transform 0.3s ease;
+}
+
+.bookingText {
+    width: 184px;
+    height: 26px;
+    background-color: transparent;
+    border: 1px solid #CD831F;
+    font-family: 'bim';
+    font-size: 20px;
+    color: #ffffff;
+    transition: transform 0.3s ease;
+}
+
+.bookingText:hover {
+    transform: scale(1.08);
+    background-color: #E39443;
+    color: #060803;
+}
+
+hr {
+    margin: 0 auto;
+    width: 1230px;
+    border: none;
+    height: 1px;
+    background-color: #E39443;
+}
+
+#prof {
+    transition: transform 0.5s ease;
+}
+
+#prof:hover {
+    transform: scale(1.08);
+    filter: drop-shadow(0 0 20px rgba(209, 120, 19, 1));
+}
+.booking {
+    max-width: 1228px;
+    margin: 0 auto;
+    margin-top: 53px;
+    margin-bottom: 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 72px;
+}
+.partone {
+    display: flex;
+    flex-direction: column;
+    gap: 72px;
+}
+.headerb {
+    font-family: 'rub';
+    font-size: 48px;
+    color: #E8CF2B;
+    filter: drop-shadow(0 0 10px rgba(209, 120, 19, 1));
+}
+.namenum {
+    display: flex;
+    flex-direction: row;
+    gap: 127px;
+}
+.firstnn {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+.firstnnText {
+    font-family: 'bim';
+    font-size: 32px;
+    color: #ffffff;
+}
+.field11 {
+    width: 552px;
+    height: 48px;
+    background-color: #100B07;
+    border: 0.5px solid #E39443;
+    font-family: 'bim';
+    font-size: 24px;
+    color: #E39443;
+    padding-top: 8px;
+    padding-left: 22px;
+}
+.field12 {
+    width: 548px;
+    height: 48px;
+    background-color: #100B07;
+    border: 0.5px solid #E39443;
+    font-family: 'bim';
+    font-size: 24px;
+    color: #E39443;
+    padding-top: 8px;
+    padding-left: 22px;
+}
+.guestdatatime {
+    display: flex;
+    flex-direction: row;
+    gap: 217.5px;
+}
+.field13 {
+    width: 149px;
+    height: 48px;
+    background-color: #100B07;
+    border: 0.5px solid #E39443;
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    padding-top: 5px;
+    padding-left: 15px;
+}
+.plusminus {
+    font-family: 'bim';
+    font-size: 28px;
+    color: #E8CF2B;
+}
+.quan {
+    font-family: 'bim';
+    font-size: 32px;
+    color: #E39443;
+}
+.field14 {
+    width: 357px;
+    height: 48px;
+    background-color: #100B07;
+    border: 0.5px solid #E39443;
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    padding-top: 5px;
+    padding-left: 15px;
+    font-family: 'bim';
+    font-size: 24px;
+    color: #E39443;
+    padding-top: 8px;
+    padding-left: 22px;
+}
+.time {
+    font-family: 'bim';
+    font-size: 24px;
+    color: #E39443;
+    padding-top: 5px;
+}
+.parttwo {
+    display: flex;
+    flex-direction: column;
+    gap: 51px;
+}
+.food {
+    display: flex;
+    flex-direction: row;
+    gap: 49px;
+}
+.foodlist {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.dropdown {
+    display: flex;
+    flex-direction: row;
+    gap: 22px;
+}
+.namefood {
+    font-family: 'bim';
+    font-size: 32px;
+    color: #ffffff;
+}
+.alposs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.pos {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+}
+.position {
+    width: 417px;
+    height: 48px;
+    background-color: #100B07;
+    border: 0.5px solid #F57E02;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-top: 9px;
+    padding-left: 22px;
+    padding-right: 22px;
+}
+.posText {
+    font-family: 'bim';
+    font-size: 24px;
+    color: #E39443;
+}
+.price {
+    font-family: 'bim';
+    font-size: 24px;
+    color: #ffffff;
+}
+.contPrice {
+    width: 210px;
+    height: 55px;
+    background-color: #100B07;
+    border: 0.5px solid #F57E02;
+    padding-left: 22px;
+    padding-top: 9px;
+}
+.totalPrice {
+    font-family: 'bim';
+    font-size: 32px;
+    color: #E8CF2B;
+}
+.bookingfinal {
+    margin: 0 auto;
+    width: 583px;
+    height: 61px;
+    background-color: #F57E02;
+    font-family: 'bim';
+    color: #100B07;
+    font-size: 20px;
+    border: none;
+    transition: transform 0.5s ease;
+}
+
+.bookingfinal:hover {
+    transform: scale(1.04);
+    filter: drop-shadow(0 0 20px rgba(209, 120, 19, 1));
+}
+footer {
+    max-width: 270px;
+    margin: 0 auto;
+    margin-top: 21px;
+    margin-bottom: 32px;
+}
+input.field11,
+input.field12,
+input.field13,
+input.field14 {
+    background-color: #100B07;
+    border: 0.5px solid #E39443;
+    font-family: 'bim';
+    font-size: 24px;
+    color: #E39443;
+    padding-left: 22px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+input.field11 { width: 552px; height: 48px; }
+input.field12 { width: 548px; height: 48px; }
+input.field14 { width: 357px; height: 48px; color-scheme: dark; }
+
+input.time-input {
+    width: 149px;
+    height: 48px;
+    padding-left: 15px;
+    padding-top: 0;
+    line-height: 46px;
+}
+
+input.field14::-webkit-calendar-picker-indicator {
+    filter: invert(70%) sepia(60%) saturate(500%) hue-rotate(340deg);
+    cursor: pointer;
+}
+
+input.field11:focus,
+input.field12:focus,
+input.field13:focus,
+input.field14:focus {
+    border-color: #E8CF2B;
+    box-shadow: 0 0 12px rgba(232, 207, 43, .35);
+}
+
+input.field11::placeholder,
+input.field12::placeholder,
+input.field13::placeholder,
+input.field14::placeholder {
+    color: #7a4a1c;
+}
+.dropdown {
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.arrow-icon {
+    transition: transform 0.3s ease;
+}
+
+.dropdown.active .arrow-icon {
+    transform: rotate(180deg);
+}
+
+.dropdown-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out;
+}
+
+.dropdown-content.open {
+    max-height: 2000px;
+    transition: max-height 0.5s ease-in;
+}

@@ -1,0 +1,231 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #060803;
+}
+
+@font-face {
+    font-family: 'rub';
+    src: url(/fonts/RUBLEV.otf);
+}
+
+@font-face {
+    font-family: 'bim';
+    src: url(/fonts/BIM.otf);
+}
+
+a {
+    text-decoration: none;
+}
+
+header {
+    max-width: 1230px;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+.logoNavButton {
+    margin-bottom: 11px;
+    display: flex;
+    flex-direction: row;
+    gap: 248px;
+}
+
+.nav {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+}
+
+.navtext:hover {
+    transform: scale(1.05);
+    color: #ED902F;
+    filter: drop-shadow(0 0 10px rgba(209, 120, 19, 1));
+}
+
+.navtext {
+    font-family: 'bim';
+    font-size: 20px;
+    color: #a9a9a9;
+    transition: transform 0.3s ease;
+}
+
+.bookingText {
+    width: 184px;
+    height: 26px;
+    background-color: transparent;
+    border: 1px solid #CD831F;
+    font-family: 'bim';
+    font-size: 20px;
+    color: #ffffff;
+    transition: transform 0.3s ease;
+}
+
+.bookingText:hover {
+    transform: scale(1.08);
+    background-color: #E39443;
+    color: #060803;
+}
+
+hr {
+    margin: 0 auto;
+    width: 1230px;
+    border: none;
+    height: 1px;
+    background-color: #E39443;
+}
+
+#prof {
+    transition: transform 0.5s ease;
+}
+
+#prof:hover {
+    transform: scale(1.08);
+    filter: drop-shadow(0 0 20px rgba(209, 120, 19, 1));
+}
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+}
+.profiletext {
+    font-family: 'rub';
+    font-size: 48px;
+    color: #E8CF2B;
+    filter: drop-shadow(0 0 10px rgba(209, 120, 19, 1));
+}
+
+.profileBlock {
+    max-width: 1230px;
+    margin: 0 auto;
+    margin-top: 53px;
+    margin-bottom: 93px;
+    display: flex;
+    flex-direction: column;
+    gap: 74px;
+}
+.infoblock {
+    display: flex;
+    flex-direction: row;
+    gap: 449px;
+}
+.information {
+    display: flex;
+    flex-direction: row;
+    gap: 70px;
+}
+.infotext {
+    margin-top: 76px;
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+}
+.login {
+    font-family: 'bim';
+    font-size: 48px;
+    color: #E8CF2B;
+}
+.number {
+    font-family: 'bim';
+    font-size: 32px;
+    color: #E39443;
+}
+.logout {
+    margin-top: 88px;
+    width: 204px;
+    height: 61px;
+    background-color: #A42626;
+    font-family: 'bim';
+    color: #ffffff;
+    font-size: 20px;
+    border: none;
+    transition: transform 0.5s ease;
+}
+
+.logout:hover {
+    transform: scale(1.02);     
+    filter: drop-shadow(0 0 10px rgba(209, 120, 19, 0.4));
+}
+.blockbooking {
+    width: 1230px;
+    min-height: 773px;
+    padding-bottom: 60px;
+    background-color: #100B07;
+    border: 0.5px solid #F57E02;
+}
+.bookinginfo {
+    max-width: 1083px;
+    margin: 0 auto;
+    margin-top: 53px;
+    display: flex;
+    flex-direction: column;
+    gap: 51px;
+}
+.textbook {
+    font-family: 'bim';
+    font-size: 48px;
+    color: #E8CF2B;
+}
+.listbooking {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+}
+.onebook {
+    width: 1083px;
+    height: 136px;
+    background-color: transparent;
+    border: 0.5px solid #F57E02;
+    transition: transform 0.5s ease;
+}
+.onebook:hover {
+    transform: scale(1.02); 
+    filter: drop-shadow(0 0 20px rgba(209, 120, 19, 0.8 ));
+}
+.onebookcont {
+    max-width: 950px;
+    margin: 0 auto;
+    margin-top: 41px;
+    display: flex;
+    flex-direction: row;
+    gap: 81px;
+}
+.onebtext {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: row;
+    gap: 150px;
+}
+.textsob {
+    font-family: 'bim';
+    font-size: 24px;
+    color: #ffffff;
+}
+#status_order_success {
+    font-family: 'bim';
+    font-size: 24px;
+    color: #E8CF2B;
+}
+#status_order_fail {
+    font-family: 'bim';
+    font-size: 24px;
+    color: #C63333;
+}
+footer {
+    max-width: 270px;
+    margin: 0 auto;
+    margin-top: 21px;
+    margin-bottom: 32px;
+}
+
+hr {
+    margin: 0 auto;
+    width: 1230px;
+    border: none;
+    height: 1px;
+    background-color: #E39443;
+}

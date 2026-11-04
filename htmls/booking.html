@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Забронировать столик</title>
+    <link rel="stylesheet" href="/css/booking.css">
+    <link rel="stylesheet" href="/css/modal.css">
+    <link rel="stylesheet" href="/css/pay-modal.css">
+    <script src="/js/auth.js" defer></script>
+    <script src="/js/modal.js" defer></script>
+    <script src="/js/booking.js" defer></script>
+</head>
+
+<body>
+    <header>
+        <div class="logoNavButton">
+            <img src="/images/Ramen no Jutsu.svg" width="180px" height="34px" alt="лого">
+            <div class="nav">
+                <a href="index.html">
+                    <p class="navtext">Главная</p>
+                </a>
+                <a href="index.html#menu">
+                    <p class="navtext">Меню</p>
+                </a>
+                <a href="index.html#reviews">
+                    <p class="navtext">Отзывы</p>
+                </a>
+                <div class="boking">
+                    <button class="bookingText" onclick="document.location='booking.html'">Забронировать</button>
+                </div>
+            </div>
+            <a href="profile.html" id="prof">
+                <img src="/images/Group.png" width="32px" alt="профиль">
+            </a>
+        </div>
+        <hr>
+    </header>
+
+    <div class="booking">
+        <div class="partone">
+            <p class="headerb">Забронировать</p>
+            <div class="namenum">
+                <div class="firstnn">
+                    <p class="firstnnText">На какое имя бронируем?</p>
+                    <input type="text" class="field11" id="booking-name" placeholder="Ваше имя">
+                </div>
+                <div class="firstnn">
+                    <p class="firstnnText">Номер телефона</p>
+                    <input type="text" class="field12" id="booking-phone" placeholder="+79123456789" inputmode="numeric"
+                        maxlength="12">
+                </div>
+            </div>
+            <div class="guestdatatime">
+                <div class="firstnn">
+                    <p class="firstnnText">Количество гостей</p>
+                    <div class="field13" id="guests-block">
+                        <p class="plusminus" data-guest-minus>-</p>
+                        <p class="quan" id="guest-quan">1</p>
+                        <p class="plusminus" data-guest-plus>+</p>
+                    </div>
+                </div>
+                <div class="firstnn">
+                    <p class="firstnnText">Дата посещения</p>
+                    <input type="date" class="field14" id="booking-date">
+                </div>
+                <div class="firstnn">
+                    <p class="firstnnText">Время</p>
+                    <input type="text" class="field13 time-input" id="booking-time" placeholder="11:00" maxlength="5"
+                        inputmode="numeric">
+                </div>
+            </div>
+        </div>
+
+        <div class="parttwo">
+            <div class="food">
+                <div class="foodlist">
+                    <div class="dropdown" onclick="toggleDropdown(this)">
+                        <p class="namefood">Блюда</p>
+                        <img src="/images/Union.svg" width="30px" class="arrow-icon">
+                    </div>
+                    <div class="alposs dropdown-content" id="food-list"></div>
+                </div>
+
+                <div class="foodlist">
+                    <div class="dropdown" onclick="toggleDropdown(this)">
+                        <p class="namefood">Напитки</p>
+                        <img src="/images/Union.svg" width="30px" class="arrow-icon">
+                    </div>
+                    <div class="alposs dropdown-content" id="drink-list"></div>
+                </div>
+            </div>
+            <div class="final_price">
+                <div class="firstnn">
+                    <p class="firstnnText">Итого</p>
+                    <div class="contPrice">
+                        <p class="totalPrice">0 ₽</p>
+                    </div>
+                </div>
+            </div>
+            <button class="bookingfinal">Забронировать</button>
+        </div>
+    </div>
+
+    <hr>
+
+    <footer>
+        <img src="/images/Ramen no Jutsu.svg" alt="лого" width="270px">
+    </footer>
+
+    <div class="pay-overlay" id="pay-overlay"></div>
+    <div class="modal_pay" id="modal-pay">
+        <button class="pay-close" id="pay-close">×</button>
+        <div class="pay-content">
+            <p class="pay-header">оплата брони</p>
+            <div class="pay-fields">
+                <div class="pay-field-row">
+                    <label class="pay-label" for="pay-card">Карта:</label>
+                    <input class="pay-input" id="pay-card" type="text" inputmode="numeric"
+                        placeholder="0000 0000 0000 0000" maxlength="19">
+                </div>
+                <div class="pay-field-row">
+                    <label class="pay-label" for="pay-exp">Срок:</label>
+                    <input class="pay-input" id="pay-exp" type="text" inputmode="numeric" placeholder="ММ/ГГ"
+                        maxlength="5">
+                </div>
+                <div class="pay-field-row">
+                    <label class="pay-label" for="pay-cvv">CVV:</label>
+                    <input class="pay-input" id="pay-cvv" type="password" inputmode="numeric" placeholder="•••"
+                        maxlength="3">
+                </div>
+                <p class="pay-error" id="pay-error"></p>
+            </div>
+            <div class="pay-btn-wrapper">
+                <button class="pay-submit" id="pay-submit">Оплатить</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay"></div>
+
+    <div class="modal_auth" id="modal-auth">
+        <button class="modal-close" data-close-modal>×</button>
+        <div class="macontent">
+            <p class="headerA">снова в строю</p>
+            <form class="fields" novalidate>
+                <div class="nameField">
+                    <label class="fieldText" for="auth-phone">Номер:</label>
+                    <input class="fieldCon" id="auth-phone" name="phone" type="text" inputmode="numeric"
+                        placeholder="+79123456789" required>
+                </div>
+                <div class="nameField">
+                    <label class="fieldText1" for="auth-pass">Пароль:</label>
+                    <div class="fieldWrap">
+                        <input class="fieldCon" id="auth-pass" name="password" type="password" placeholder="••••••••"
+                            required>
+                        <button type="button" class="pass-toggle" data-toggle-pass>👁</button>
+                    </div>
+                </div>
+                <p class="form-error" data-auth-error></p>
+            </form>
+            <div class="buttonMot">
+                <button class="signin" type="button">Войти</button>
+                <p class="motiv">Еще не с нами?
+                    <a href="#" data-switch-modal="reg"><strong class="other"> Присоединяйтесь!</strong></a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal_reg" id="modal-reg">
+        <button class="modal-close" data-close-modal>×</button>
+        <div class="macontent1">
+            <p class="headerB">Стань частью Конохи</p>
+            <form class="fields" novalidate>
+                <div class="nameField">
+                    <label class="fieldText2" for="reg-login">Логин:</label>
+                    <input class="fieldCon" id="reg-login" name="login" type="text" placeholder="Ваш логин" required>
+                </div>
+                <div class="nameField">
+                    <label class="fieldText" for="reg-phone">Номер:</label>
+                    <input class="fieldCon" id="reg-phone" name="phone" type="text" inputmode="numeric"
+                        placeholder="+79123456789" required>
+                </div>
+                <div class="nameField">
+                    <label class="fieldText1" for="reg-pass">Пароль:</label>
+                    <div class="fieldWrap">
+                        <input class="fieldCon" id="reg-pass" name="password" type="password" placeholder="••••••••"
+                            required>
+                        <button type="button" class="pass-toggle" data-toggle-pass>👁</button>
+                    </div>
+                </div>
+                <p class="form-error" data-reg-error></p>
+            </form>
+            <div class="buttonMot">
+                <button class="signup" type="button">Зарегистрироваться</button>
+                <p class="motiv">Уже знакомы?
+                    <a href="#" data-switch-modal="auth"><strong class="other"> Входите!</strong></a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
