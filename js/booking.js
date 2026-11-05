@@ -1,9 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-        window.toggleDropdown = function(element) {
-        element.classList.toggle('active');
-        const content = element.nextElementSibling;
-        content.classList.toggle('open');
-    };
     const nameInput = document.getElementById('booking-name');
     if (!nameInput) return;
 
@@ -12,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const phoneInput = document.getElementById('booking-phone');
     const dateInput = document.getElementById('booking-date');
     const timeInput = document.getElementById('booking-time');
+    const timeDropdown = document.getElementById('time-dropdown');
     const guestQuan = document.getElementById('guest-quan');
     const guestMinus = document.querySelector('[data-guest-minus]');
     const guestPlus = document.querySelector('[data-guest-plus]');
@@ -22,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     phoneInput.addEventListener('focus', () => { if (!phoneInput.value) phoneInput.value = '+'; });
-    phoneInput.addEventListener('blur', () => { if (phoneInput.value === '+') phoneInput.value = ''; });
+    phoneInput.addEventListener('blur',  () => { if (phoneInput.value === '+') phoneInput.value = ''; });
     phoneInput.addEventListener('input', () => {
         let d = phoneInput.value.replace(/\D/g, '').slice(0, 11);
         phoneInput.value = d ? '+' + d : '';
@@ -40,34 +36,76 @@ document.addEventListener('DOMContentLoaded', () => {
     dateInput.min = '2026-11-01';
     dateInput.max = '2026-12-31';
 
-    timeInput.addEventListener('input', () => {
-        let val = timeInput.value.replace(/\D/g, '');
-        if (val.length === 0) { timeInput.value = ''; return; }
-        if (val.length === 1 && parseInt(val) > 1) val = '0' + val;
-        if (val.length >= 2) {
-            let hh = val.slice(0, 2);
-            let mm = val.slice(2, 4);
-            if (mm.length > 0 && parseInt(mm[0]) > 5) mm = mm[0];
-            timeInput.value = mm.length > 0 ? hh + ':' + mm : hh + ':';
-        } else {
-            timeInput.value = val;
-        }
-    });
+    let busyTimes = [];
 
-    timeInput.addEventListener('blur', () => {
-        const v = timeInput.value.trim();
-        if (!v) return;
-        if (!/^\d{2}:\d{2}$/.test(v)) {
-            alert('Введите время в формате ЧЧ:ММ');
+    async function generateTimeSlots() {
+        if (!dateInput.value) {
+            alert('Сначала выберите дату!');
             timeInput.value = '';
             return;
         }
-        const [h, m] = v.split(':').map(Number);
-        if (h < 11 || h > 19 || m > 59 || (h === 19 && m > 0)) {
-            alert('Время бронирования — с 11:00 до 19:00');
-            timeInput.value = '';
+
+        try {
+            const res = await fetch(`/api/busy-slots?date=${dateInput.value}`);
+            busyTimes = await res.json();
+            
+            timeDropdown.innerHTML = '';
+            const startHour = 11;
+            const endHour = 19;
+
+            for (let h = startHour; h <= endHour; h++) {
+                for (let m of ['00', '30']) {
+                    if (h === 19 && m === '30') continue;
+
+                    const timeStr = `${String(h).padStart(2, '0')}:${m}`;
+                    const isBusy = busyTimes.includes(timeStr);
+
+                    const div = document.createElement('div');
+                    div.className = 'time-slot' + (isBusy ? ' disabled' : '');
+                    div.textContent = timeStr;
+                    
+                    if (!isBusy) {
+                        div.addEventListener('click', () => {
+                            timeInput.value = timeStr;
+                            timeDropdown.classList.remove('active');
+                        });
+                    }
+                    
+                    timeDropdown.appendChild(div);
+                }
+            }
+
+            timeDropdown.classList.add('active');
+        } catch (e) {
+            console.error('Ошибка загрузки слотов');
+        }
+    }
+
+    dateInput.addEventListener('change', () => {
+        timeInput.value = '';
+        if (dateInput.value) generateTimeSlots();
+    });
+
+    timeInput.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (dateInput.value) {
+            timeDropdown.classList.toggle('active');
+        } else {
+            alert('Сначала выберите дату!');
         }
     });
+
+    document.addEventListener('click', (e) => {
+        if (e.target !== timeInput && !timeDropdown.contains(e.target)) {
+            timeDropdown.classList.remove('active');
+        }
+    });
+
+    window.toggleDropdown = function(element) {
+        element.classList.toggle('active');
+        const content = element.nextElementSibling;
+        if (content) content.classList.toggle('open');
+    };
 
     let dishes = [];
     const totalEl = document.querySelector('.totalPrice');
@@ -85,7 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const foodList = document.getElementById('food-list');
             const drinkList = document.getElementById('drink-list');
             
-            if (!foodList || !drinkList) return; // Защита от ошибки, если блоков нет
+            if (!foodList || !drinkList) return; 
 
             foodList.innerHTML = '';
             drinkList.innerHTML = '';
@@ -125,22 +163,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (itemObj.qty > 0) { itemObj.qty--; quanEl.textContent = itemObj.qty; recalc(); }
                 });
             });
-        } catch (e) {
-            console.error('Ошибка загрузки меню');
-        }
+        } catch (e) { console.error('Ошибка загрузки меню'); }
     }
 
     loadMenuForBooking();
 
     document.querySelector('.bookingfinal').addEventListener('click', () => {
-        if (isGuest) {
-            alert('Чтобы забронировать столик, войдите или зарегистрируйтесь!');
-            return;
-        }
+        if (isGuest) { alert('Чтобы забронировать столик, войдите или зарегистрируйтесь!'); return; }
         if (!nameInput.value.trim()) { alert('Введите имя'); return; }
         if (phoneInput.value.replace(/\D/g, '').length !== 11) { alert('Введите номер (11 цифр)'); return; }
         if (!dateInput.value) { alert('Выберите дату'); return; }
-        if (!/^\d{2}:\d{2}$/.test(timeInput.value)) { alert('Введите время ЧЧ:ММ (11:00–19:00)'); return; }
+        if (!timeInput.value) { alert('Выберите время'); return; }
 
         document.getElementById('pay-overlay').classList.add('active');
         document.getElementById('modal-pay').classList.add('active');
@@ -164,18 +197,9 @@ document.addEventListener('DOMContentLoaded', () => {
     payOverlay.addEventListener('click', closePay);
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closePay(); });
 
-    cardIn.addEventListener('input', () => {
-        let d = cardIn.value.replace(/\D/g, '').slice(0, 16);
-        cardIn.value = d.replace(/(.{4})/g, '$1 ').trim();
-    });
-    expIn.addEventListener('input', () => {
-        let d = expIn.value.replace(/\D/g, '').slice(0, 4);
-        if (d.length >= 2) d = d.slice(0, 2) + '/' + d.slice(2);
-        expIn.value = d;
-    });
-    cvvIn.addEventListener('input', () => {
-        cvvIn.value = cvvIn.value.replace(/\D/g, '').slice(0, 3);
-    });
+    cardIn.addEventListener('input', () => { let d = cardIn.value.replace(/\D/g, '').slice(0, 16); cardIn.value = d.replace(/(.{4})/g, '$1 ').trim(); });
+    expIn.addEventListener('input', () => { let d = expIn.value.replace(/\D/g, '').slice(0, 4); if (d.length >= 2) d = d.slice(0, 2) + '/' + d.slice(2); expIn.value = d; });
+    cvvIn.addEventListener('input', () => { cvvIn.value = cvvIn.value.replace(/\D/g, '').slice(0, 3); });
 
     document.getElementById('pay-submit').addEventListener('click', () => {
         const card = cardIn.value.replace(/\s/g, '');
@@ -185,21 +209,15 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!card || !exp || !cvv) { errEl.textContent = 'Заполните все поля!'; return; }
         if (card.length !== 16)    { errEl.textContent = 'Номер карты — 16 цифр'; return; }
         if (!/^\d{2}\/\d{2}$/.test(exp)) { errEl.textContent = 'Срок в формате ММ/ГГ'; return; }
-        
         const [mm, yy] = exp.split('/').map(Number);
         if (mm < 1 || mm > 12) { errEl.textContent = 'Неверный месяц'; return; }
         if (new Date(2000 + yy, mm, 1) <= new Date()) { errEl.textContent = 'Карта просрочена'; return; }
         if (cvv.length !== 3)  { errEl.textContent = 'CVV — 3 цифры'; return; }
 
         const orderNumber = Math.floor(1000 + Math.random() * 9000);
-
         const bookingData = {
-            userId: user.id,
-            orderNumber: orderNumber,
-            date: dateInput.value,
-            time: timeInput.value,
-            guests: guestCount,
-            items: dishes.filter(d => d.qty > 0),
+            userId: user.id, orderNumber, date: dateInput.value, time: timeInput.value,
+            guests: guestCount, items: dishes.filter(d => d.qty > 0),
             total: dishes.reduce((a, d) => a + d.price * d.qty, 0)
         };
 
@@ -212,7 +230,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(data => {
             if (data.ok) {
                 closePay();
-                alert('Бронь успешно оплачена и сохранена в базе!');
+                alert('Бронь успешно оплачена!');
                 setTimeout(() => document.location = 'profile.html', 1000);
             } else {
                 alert('Ошибка: ' + data.error);

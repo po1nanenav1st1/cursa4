@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Профиль</title>
     <link rel="stylesheet" href="/css/profile.css">
+    <link rel="stylesheet" href="/css/modal.css">
     <script src="/js/auth.js" defer></script>
+    <script src="/js/modal.js" defer></script>
+    <script src="/js/profile.js" defer></script>
 </head>
 <body>
-    <header>
+     <header>
         <div class="logoNavButton">
             <img src="/images/Ramen no Jutsu.svg" width="180px" height="34px" alt="лого">
             <div class="nav">
@@ -19,9 +22,7 @@
                     <button class="bookingText" onclick="document.location='booking.html'">Забронировать</button>
                 </div>
             </div>
-            <a href="profile.html">
-                <img src="/images/Group.png" width="32px" id="prof">
-            </a>
+            <a href="profile.html"><img src="/images/Group.png" width="32px" id="prof"></a>
         </div>
         <hr>
     </header>
@@ -37,88 +38,53 @@
                         <p class="number" id="profile-phone">+7 912 345 67 89</p>
                     </div>
                 </div>
-                
                 <div style="display: flex; flex-direction: column; gap: 20px;">
-                    <button class="logout" id="admin-btn" style="display: none; background-color: #E8CF2B; color: #100B07;" onclick="document.location='admin.html'">Админ-панель</button>
+                    <button class="logout" id="review-btn" style="background-color: #E8CF2B; color: #100B07;">Оставить отзыв</button>
+                    <button class="logout" id="admin-btn" style="display: none; background-color: #F57E02; color: #100B07;" onclick="document.location='admin.html'">Админ-панель</button>
                     <button class="logout" id="logout-btn">Выйти</button>
                 </div>
             </div>
-
             <div class="blockbooking">
                 <div class="bookinginfo">
                     <p class="textbook">Ваши бронирования</p>
-                    <div class="listbooking" id="bookings-list">
-                    </div>
+                    <div class="listbooking" id="bookings-list"></div>
                 </div>
             </div>
         </div>
     </div>
     <hr>
-    <footer>
-        <img src="/images/Ramen no Jutsu.svg" alt="лого" width="270px">
-    </footer>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', async () => {
-            const user = getCurrentUser();
-            if (!user) {
-                document.location = 'index.html';
-                return;
-            }
-            
-            document.getElementById('profile-login').textContent = user.login;
-            document.getElementById('profile-phone').textContent = user.phone;
+    <div class="modal-overlay" id="review-overlay"></div>
+    <div class="modal_auth review-modal-window" id="review-modal" style="display: none;">
+        <button class="modal-close" id="close-review">×</button>
+        <div class="macontent" style="max-width: 500px;">
+            <p class="headerA">Оставить отзыв</p>
+            <div class="fields">
+                
+                <div class="field-group">
+                    <div style="flex: 2;">
+                        <label class="fieldText" style="margin-bottom: 10px; display: block;">Ваше имя:</label>
+                        <input type="text" id="review-name" class="review-input" placeholder="Например: Марина">
+                    </div>
+                    <div style="flex: 1;">
+                        <label class="fieldText" style="margin-bottom: 10px; display: block;">Возраст:</label>
+                        <input type="text" id="review-age" class="review-input" placeholder="25">
+                    </div>
+                </div>
 
-            if (user.role === 'admin') {
-                document.getElementById('admin-btn').style.display = 'block';
-            }
+                <label class="fieldText" style="margin-bottom: 15px; display: block;">Оценка:</label>
+                <div style="display: flex; gap: 10px; margin-bottom: 20px;" id="stars-container"></div>
 
-            document.getElementById('logout-btn').addEventListener('click', () => {
-                logoutUser();
-                document.location = 'index.html';
-            });
+                <label class="fieldText1" for="review-text" style="margin-left: 0; margin-bottom: 15px; display: block;">Текст отзыва:</label>
+                <textarea class="review-textarea" id="review-text" placeholder="Напишите ваш отзыв здесь..."></textarea>
+            </div>
+            <div class="buttonMot" style="margin-top: 20px;">
+                <button class="signin" id="submit-review" style="width: 100%;">Отправить</button>
+            </div>
+        </div>
+    </div>
 
-            const list = document.getElementById('bookings-list');
-            list.innerHTML = '<p style="color: white; font-family: \'bim\';">Загрузка...</p>';
+    <footer><img src="/images/Ramen no Jutsu.svg" alt="лого" width="270px"></footer>
 
-            try {
-                const res = await fetch('/api/bookings/' + user.id);
-                const myBookings = await res.json();
-
-                list.innerHTML = '';
-
-                if (myBookings.length === 0) {
-                    list.innerHTML = `<p style="font-family: 'bim'; color: #C5944E; font-size: 20px;">У вас пока нет бронирований.</p>`;
-                    return;
-                }
-
-                myBookings.forEach(b => {
-                    const cleanDate = b.date.substring(0, 10);
-                    const dateParts = cleanDate.split('-');
-                    const formattedDate = `${dateParts[2]}.${dateParts[1]}.${dateParts[0]}`;
-                    const isSuccess = b.status !== 'Отменено';
-                    const statusId = isSuccess ? 'status_order_success' : 'status_order_fail';
-                    const displayTime = b.time.substring(0, 5);
-
-                    const div = document.createElement('div');
-                    div.className = 'onebook';
-                    div.innerHTML = `
-                        <div class="onebookcont">
-                            <img src="/images/table.svg" width="69px">
-                            <div class="onebtext">
-                                <p class="textsob">№${b.orderNumber}</p>
-                                <p class="textsob">${formattedDate}</p>
-                                <p class="textsob">${displayTime}</p>
-                                <p id="${statusId}">${b.status}</p>
-                            </div>
-                        </div>
-                    `;
-                    list.appendChild(div);
-                });
-            } catch (err) {
-                list.innerHTML = `<p style="color: red; font-family: 'bim';">Ошибка загрузки данных с сервера.</p>`;
-            }
-        });
-    </script>
 </body>
 </html>

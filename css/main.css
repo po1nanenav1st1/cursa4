@@ -655,17 +655,21 @@ footer {
     max-width: 342px;
     margin: 0 auto;
     margin-top: 25px;
+    padding-bottom: 25px;
     display: flex;
     flex-direction: column;
-    gap: 39px;
+    justify-content: space-between;
+    height: 269px;
 }
 .content1 {
     max-width: 342px;
     margin: 0 auto;
     margin-top: 25px;
+    padding-bottom: 25px;
     display: flex;
     flex-direction: column;
-    gap: 60px;
+    justify-content: space-between;
+    height: 269px;
 }
 .revText {
     display: flex;

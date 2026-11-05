@@ -355,3 +355,56 @@ input.field14::placeholder {
     max-height: 2000px;
     transition: max-height 0.5s ease-in;
 }
+.time-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 149px;
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: #100B07;
+    border: 1px solid #E39443;
+    z-index: 10;
+    margin-top: 5px;
+    flex-direction: column;
+}
+
+.time-dropdown.active {
+    display: flex;
+}
+
+.time-slot {
+    padding: 10px 15px;
+    font-family: 'bim';
+    font-size: 20px;
+    color: #E39443;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(227, 148, 67, 0.2);
+    transition: 0.2s;
+}
+
+.time-slot:hover:not(.disabled) {
+    background-color: rgba(245, 126, 2, 0.2);
+    color: #E8CF2B;
+}
+
+.time-slot.disabled {
+    color: #444;
+    cursor: not-allowed;
+    text-decoration: line-through;
+    background-color: #060803;
+}
+
+.time-input {
+    cursor: pointer;
+    background-color: transparent;
+    border: 0.5px solid #E39443;
+    color: #E39443;
+    font-family: 'bim';
+    font-size: 24px;
+    padding-left: 15px;
+    height: 48px;
+    box-sizing: border-box;
+    outline: none;
+}

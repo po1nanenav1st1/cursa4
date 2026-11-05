@@ -27,7 +27,6 @@ app.post('/api/register', (req, res) => {
     db.query('SELECT * FROM users WHERE login = ? OR phone = ?', [login, phone], (err, results) => {
         if (err) return res.status(500).json({ error: 'Ошибка БД' });
         if (results.length > 0) return res.status(400).json({ error: 'Логин или номер уже заняты' });
-
         db.query('INSERT INTO users (login, phone, password, role) VALUES (?, ?, ?, "user")', [login, phone, password], (err, result) => {
             if (err) return res.status(500).json({ error: 'Ошибка при сохранении' });
             res.status(201).json({ ok: true, user: { id: result.insertId, login, phone, role: 'user' } });
@@ -69,7 +68,8 @@ app.get('/api/reviews', (req, res) => {
 
 app.post('/api/reviews', (req, res) => {
     const { userId, author_name, rating, text } = req.body;
-    db.query('INSERT INTO reviews (userID, author_name, rating, text, is_hidden) VALUES (?, ?, ?, ?, 0)', [userId, author_name, rating, text], (err, result) => {
+    db.query('INSERT INTO reviews (userID, author_name, rating, text, is_hidden) VALUES (?, ?, ?, ?, 1)', 
+    [userId, author_name, rating, text], (err, result) => {
         if (err) return res.status(500).json({ error: 'Ошибка при сохранении отзыва' });
         res.json({ ok: true, id: result.insertId });
     });
@@ -82,26 +82,66 @@ app.get('/api/settings', (req, res) => {
     });
 });
 
+app.get('/api/busy-slots', (req, res) => {
+    const { date } = req.query;
+    if (!date) return res.status(400).json({ error: 'Дата не указана' });
+    
+    db.query('SELECT booking_time FROM bookings WHERE booking_date = ? AND statusID != 2', [date], (err, results) => {
+        if (err) return res.status(500).json({ error: 'Ошибка сервера' });
+        
+        let busy = [];
+        results.forEach(r => {
+            let timeStr = r.booking_time.substring(0, 5);
+            let [h, m] = timeStr.split(':').map(Number);
+            
+            busy.push(timeStr);
+            
+            let nextH = h + 1;
+            if (nextH < 24) {
+                busy.push(`${String(nextH).padStart(2, '0')}:${String(m).padStart(2, '0')}`);
+            }
+        });
+        
+        res.json(busy);
+    });
+});
+
 app.post('/api/booking', (req, res) => {
     const { userId, orderNumber, date, time, guests, items, total } = req.body;
-    db.query('SELECT statusID FROM booking_statuses WHERE status_name = "Отменено"', (err, statusRes) => {
-        const cancelStatusID = (statusRes && statusRes.length > 0) ? statusRes[0].statusID : 2;
-        db.query('INSERT INTO bookings (userID, order_number, booking_date, booking_time, guests_count, final_price, statusID) VALUES (?, ?, ?, ?, ?, ?, 1)', [userId, orderNumber, date, time, guests, total], (err, bookingResult) => {
-            if (err) return res.status(500).json({ error: 'Ошибка при создании брони' });
-            const bookingId = bookingResult.insertId;
-            if (items && items.length > 0) {
-                db.query('SELECT menu_itemID, name FROM menu_items', (err, menuRes) => {
-                    if (err) return res.status(500).json({ error: 'Ошибка БД' });
-                    const orderValues = items.map(item => {
-                        const dbItem = menuRes.find(m => m.name.toLowerCase() === item.name.toLowerCase());
-                        return [bookingId, dbItem ? dbItem.menu_itemID : 1, item.qty, item.price * item.qty];
-                    });
-                    db.query('INSERT INTO orders (bookingsID, menu_itemID, quantity, order_price) VALUES ?', [orderValues], (err) => {
-                        if (err) return res.status(500).json({ error: 'Ошибка при сохранении блюд' });
-                        res.json({ ok: true });
-                    });
+    
+    db.query('SELECT * FROM bookings WHERE booking_date = ? AND booking_time = ? AND statusID != 2', [date, time], (err, existing) => {
+        if (existing && existing.length > 0) {
+            return res.status(400).json({ error: 'Это время уже занято!' });
+        }
+
+        let [h, m] = time.split(':').map(Number);
+        let prevTime = `${String(h-1).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+        
+        db.query('SELECT * FROM bookings WHERE booking_date = ? AND booking_time = ? AND statusID != 2', [date, prevTime], (err, prev) => {
+            if (prev && prev.length > 0) {
+                return res.status(400).json({ error: 'Нельзя бронировать менее чем за час до другой брони!' });
+            }
+            
+            db.query('SELECT statusID FROM booking_statuses WHERE status_name = "Отменено"', (err, statusRes) => {
+                const cancelStatusID = (statusRes && statusRes.length > 0) ? statusRes[0].statusID : 2;
+                db.query('INSERT INTO bookings (userID, order_number, booking_date, booking_time, guests_count, final_price, statusID) VALUES (?, ?, ?, ?, ?, ?, 1)', [userId, orderNumber, date, time, guests, total], (err, bookingResult) => {
+                    if (err) return res.status(500).json({ error: 'Ошибка при создании брони' });
+                    const bookingId = bookingResult.insertId;
+                    if (items && items.length > 0) {
+                        db.query('SELECT menu_itemID, name FROM menu_items', (err, menuRes) => {
+                            if (err) return res.status(500).json({ error: 'Ошибка БД' });
+                            const orderValues = items.map(item => {
+                                const dbItem = menuRes.find(m => m.name.toLowerCase() === item.name.toLowerCase());
+                                return [bookingId, dbItem ? dbItem.menu_itemID : 1, item.qty, item.price * item.qty];
+                            });
+                            db.query('INSERT INTO orders (bookingsID, menu_itemID, quantity, order_price) VALUES ?', [orderValues], (err) => {
+                                if (err) return res.status(500).json({ error: 'Ошибка при сохранении блюд' });
+                                res.json({ ok: true });
+                            });
+                        });
+                    } else res.json({ ok: true });
                 });
-            } else res.json({ ok: true });
+            });
         });
     });
 });

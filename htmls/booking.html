@@ -52,7 +52,7 @@
                         maxlength="12">
                 </div>
             </div>
-            <div class="guestdatatime">
+                        <div class="guestdatatime">
                 <div class="firstnn">
                     <p class="firstnnText">Количество гостей</p>
                     <div class="field13" id="guests-block">
@@ -65,10 +65,12 @@
                     <p class="firstnnText">Дата посещения</p>
                     <input type="date" class="field14" id="booking-date">
                 </div>
-                <div class="firstnn">
+                <div class="firstnn" style="position: relative;">
                     <p class="firstnnText">Время</p>
-                    <input type="text" class="field13 time-input" id="booking-time" placeholder="11:00" maxlength="5"
-                        inputmode="numeric">
+                    <input type="text" class="field13 time-input" id="booking-time" placeholder="Выберите..." readonly style="cursor: pointer;">
+                    
+                    <div id="time-dropdown" class="time-dropdown">
+                    </div>
                 </div>
             </div>
         </div>

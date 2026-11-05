@@ -41,71 +41,135 @@
             <table class="admin-table">
                 <thead>
                     <tr>
-                        <th>№ Брони</th><th>Клиент</th><th>Телефон</th><th>Дата и Время</th><th>Гости</th><th>Сумма</th><th>Статус</th><th>Действие</th>
+                        <th>№ Брони</th>
+                        <th>Клиент</th>
+                        <th>Телефон</th>
+                        <th>Дата и Время</th>
+                        <th>Гости</th>
+                        <th>Сумма</th>
+                        <th>Статус</th>
+                        <th>Действие</th>
                     </tr>
                 </thead>
-                <tbody id="bookings-body"><tr><td colspan="8" style="text-align:center;">Загрузка...</td></tr></tbody>
+                <tbody id="bookings-body">
+                    <tr><td colspan="8" style="text-align:center;">Загрузка...</td></tr>
+                </tbody>
             </table>
         </div>
 
         <div id="tab-users" style="display: none;">
             <table class="admin-table">
                 <thead>
-                    <tr><th>ID</th><th>Логин</th><th>Телефон</th><th>Статус</th><th>Действие</th></tr>
+                    <tr>
+                        <th>ID</th>
+                        <th>Логин</th>
+                        <th>Телефон</th>
+                        <th>Статус</th>
+                        <th>Действие</th>
+                    </tr>
                 </thead>
-                <tbody id="users-body"><tr><td colspan="5" style="text-align:center;">Загрузка...</td></tr></tbody>
+                <tbody id="users-body">
+                    <tr><td colspan="5" style="text-align:center;">Загрузка...</td></tr>
+                </tbody>
             </table>
         </div>
 
         <div id="tab-menu" style="display: none;">
             <button class="status-btn btn-success admin-add-btn" onclick="document.getElementById('add-menu-modal').style.display='flex'">+ Добавить блюдо</button>
+            
             <table class="admin-table">
                 <thead>
-                    <tr><th>ID</th><th>Название</th><th>Цена</th><th>Статус</th><th>Действие</th></tr>
+                    <tr>
+                        <th>ID</th>
+                        <th>Название</th>
+                        <th>Цена</th>
+                        <th>Статус</th>
+                        <th>Действие</th>
+                    </tr>
                 </thead>
-                <tbody id="menu-body"><tr><td colspan="5" style="text-align:center;">Загрузка...</td></tr></tbody>
+                <tbody id="menu-body">
+                    <tr><td colspan="5" style="text-align:center;">Загрузка...</td></tr>
+                </tbody>
             </table>
         </div>
 
         <div id="tab-reviews" style="display: none;">
             <table class="admin-table">
                 <thead>
-                    <tr><th>ID</th><th>Автор</th><th>Оценка</th><th>Текст</th><th>Статус</th><th>Действие</th></tr>
+                    <tr>
+                        <th>ID</th>
+                        <th>Автор</th>
+                        <th>Оценка</th>
+                        <th>Текст</th>
+                        <th>Статус</th>
+                        <th>Действие</th>
+                    </tr>
                 </thead>
-                <tbody id="reviews-body"><tr><td colspan="6" style="text-align:center;">Загрузка...</td></tr></tbody>
+                <tbody id="reviews-body">
+                    <tr><td colspan="6" style="text-align:center;">Загрузка...</td></tr>
+                </tbody>
             </table>
         </div>
 
         <div id="tab-settings" style="display: none;">
             <div class="settings-form">
-                <label>Телефон:</label>
+                <label class="modal-add-label">Телефон:</label>
                 <input type="text" id="set-phone" class="modal-add-input">
-                <label>Email:</label>
+                
+                <label class="modal-add-label" style="margin-top: 15px;">Email:</label>
                 <input type="text" id="set-email" class="modal-add-input">
-                <label>Адрес:</label>
+                
+                <label class="modal-add-label" style="margin-top: 15px;">Адрес:</label>
                 <input type="text" id="set-address" class="modal-add-input">
-                <button class="status-btn btn-success" style="margin-top: 20px; padding: 15px;" onclick="saveSettings()">Сохранить изменения</button>
+                
+                <button class="status-btn btn-success" style="margin-top: 20px; padding: 15px; width: 100%;" onclick="saveSettings()">Сохранить изменения</button>
             </div>
         </div>
     </div>
 
     <hr class="admin-hr">
-    <footer><img src="/images/Ramen no Jutsu.svg" alt="лого" width="270px"></footer>
+    
+    <footer>
+        <img src="/images/Ramen no Jutsu.svg" alt="лого" width="270px">
+    </footer>
 
     <div id="add-menu-modal" class="modal-add-menu">
         <div class="modal-add-content">
             <h2 class="modal-add-title">НОВОЕ БЛЮДО</h2>
-            <label class="modal-add-label">Название: <input type="text" id="add-name" class="modal-add-input"></label>
-            <label class="modal-add-label">Описание: <textarea id="add-desc" rows="4" class="modal-add-input"></textarea></label>
+            
+            <label class="modal-add-label">Название:
+                <input type="text" id="add-name" class="modal-add-input">
+            </label>
+            
+            <label class="modal-add-label">Описание:
+                <textarea id="add-desc" rows="4" class="modal-add-input"></textarea>
+            </label>
+            
             <div class="modal-add-row">
-                <label>Цена (₽): <input type="number" id="add-price" class="modal-add-input"></label>
-                <label>Тип: <select id="add-type" class="modal-add-select"><option value="food">Еда</option><option value="drink">Напиток</option></select></label>
+                <label>Цена (₽):
+                    <input type="number" id="add-price" class="modal-add-input">
+                </label>
+                <label>Тип:
+                    <select id="add-type" class="modal-add-select">
+                        <option value="food">Еда</option>
+                        <option value="drink">Напиток</option>
+                    </select>
+                </label>
             </div>
+
             <div class="modal-add-row">
-                <label>Острота (0-3): <input type="number" id="add-spicy" class="modal-add-input" min="0" max="3" value="0"></label>
-                <label>Сладость (0-3): <input type="number" id="add-sweet" class="modal-add-input" min="0" max="3" value="0"></label>
+                <label>Острота (0-3):
+                    <input type="number" id="add-spicy" class="modal-add-input" min="0" max="3" value="0">
+                </label>
+                <label>Сладость (0-3):
+                    <input type="number" id="add-sweet" class="modal-add-input" min="0" max="3" value="0">
+                </label>
             </div>
-            <label class="modal-add-label">Картинка (путь): <input type="text" id="add-image" class="modal-add-input" placeholder="/images/mefsad.svg"></label>
+            
+            <label class="modal-add-label">Картинка (путь):
+                <input type="text" id="add-image" class="modal-add-input" placeholder="Например: /images/mefsad.svg">
+            </label>
+            
             <div class="modal-add-buttons">
                 <button class="status-btn btn-success modal-add-btn" onclick="createMenuItem()">Сохранить</button>
                 <button class="status-btn btn-cancel modal-add-btn" onclick="document.getElementById('add-menu-modal').style.display='none'">Отмена</button>
